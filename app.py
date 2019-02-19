@@ -7,7 +7,7 @@ import logging
 from logging import Formatter, FileHandler
 import os
 import requests
-from flask_socketio import SocketIO, send
+from flask_socketio import SocketIO, send, emit
 
 
 #----------------------------------------------------------------------------#
@@ -31,19 +31,38 @@ def home():
     return render_template('pages/placeholder.home.html')
 
 
-
 @app.route('/download_advertisment')
+@socketio.on('new_content')
 def user_download():
+    print('=======================')
     url = request.args['url']  # user provides url in query string
     r = requests.get(url)
 
-    # write to a file in the app's instance folder
-    # come up with a better file name
-    with app.open_instance_resource( app.root_path + "/static/media" + '/sample.mp4', 'wb') as f:
+    # # write to a file in the app's instance folder
+    # # come up with a better file name
+    f_name = '/sample3.mp4'
+    with app.open_instance_resource( app.root_path + "/static/media" + f_name, 'wb') as f:
         f.write(r.content)
-    
-    return render_template('pages/placeholder.home.html')
+    socketio.emit('new_content', "refresh")
 
+    return jsonify({'result' : "success"})
+
+
+
+#----------------------------------------------------------------------------#
+# Functions.
+#----------------------------------------------------------------------------#
+# Donwload a Large File with requests
+def download_file(url):
+    local_filename = url.split('/')[-1]
+    # NOTE the stream=True parameter below
+    with requests.get(url, stream=True) as r:
+        with open(local_filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                if chunk: # filter out keep-alive new chunks
+                    f.write(chunk)
+                    # f.flush()
+    return local_filename
 
 #----------------------------------------------------------------------------#
 # Launch.

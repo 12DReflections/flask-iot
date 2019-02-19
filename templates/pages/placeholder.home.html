@@ -7,15 +7,7 @@
 </video>
 
 <h2>Broadcast</h2>
-
-
-
-<ul id="messages"></ul>
-<input type="text" id="myMessage">
-<button id="sendbutton">Send</button>
-
-
-
+<!-- refresh the page by hitting an endpoint-->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
@@ -28,11 +20,21 @@ $(document).ready(function() {
 		$("#messages").append('<li>'+msg+'</li>');
 		console.log('Received message');
 	});
+	// socket.on('new_content', function(msg1) {
+	// 	$("#messages").append('<li>'+msg1+'</li>');
+	// 	console.log('Received message1');
+	// });
+	socket.on('new_content', function() {
+    location.reload();
+	});
+
 	$('#sendbutton').on('click', function() {
 		socket.send($('#myMessage').val());
 		$('#myMessage').val('');
 	});
 });
 </script>
-
+<ul id="messages"></ul>
+<input type="text" id="myMessage">
+<button id="sendbutton">Send</button>
 {% endblock %}
