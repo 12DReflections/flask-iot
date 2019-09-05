@@ -40,7 +40,7 @@ def user_download():
 
     # # write to a file in the app's instance folder
     # # come up with a better file name
-    f_name = '/sample3.mp4'
+    f_name = '/Freespace1.mp4'
     with app.open_instance_resource( app.root_path + "/static/media" + f_name, 'wb') as f:
         f.write(r.content)
     socketio.emit('new_content', "refresh")
