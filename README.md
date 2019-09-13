@@ -15,6 +15,14 @@ And add this:
 @chromium-browser --kiosk --incognito http://google.com/  
 
 
+start chrome --incognito --kiosk http://localhost:5000
+
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --incognito --kiosk http://localhost:5000
+
+
+C:\WINDOWS\System32\cmd.exe
+/c start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --incognito --start-fullscreen --kiosk http://localhost:5000
+
 ### Python installation and boot
 Add to python3 start commands to boot script at 
 `/etc/rc.local`
@@ -23,3 +31,4 @@ Add to python3 start commands to boot script at
 ### Hide mouse
 https://stackoverflow.com/questions/41242383/hide-mouse-pointer-on-chromium-kiosk
 
+powershell -ExecutionPolicy ByPass -f C:\Users\frees\apps\flask-iot\startup.ps1
