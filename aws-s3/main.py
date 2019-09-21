@@ -30,10 +30,15 @@ def main():
         local_m = local_m.replace(tzinfo=tzutc())
 
     # Download the file and update the last modified
+    # Remove existing file, replace with new file, update last modified, reboot system.
     if mod > local_m:
-        s3.download_file("video-media-0000", user + '/ypl2.jpeg', 'ypl2.jpeg')
+        s3.download_file("video-media-0000", user + '/ypl2.jpeg', 'C:\\apps\\flask-iot\\static\\media\\ypl2.jpeg') # download with download filename
+        os.rename('C:\\apps\\flask-iot\\static\\media\\ypl3.jpeg',  'C:\\apps\\flask-iot\\static\\media\\ypl4.jpeg') # rename existing to number 4
+        os.rename('C:\\apps\\flask-iot\\static\\media\\ypl2.jpeg',  'C:\\apps\\flask-iot\\static\\media\\ypl3.jpeg') # rename new to number 3
         with open('./modified.txt', 'w') as f:
-            f.write(str(local_m))
+            f.write(str(mod))
+        os.remove('C:\\apps\\flask-iot\\static\\media\\ypl4.jpeg') # remove number 4 (aka older version)
+        # os.system("shutdown -t 0 -r -f")
 
 if __name__=='__main__':
     main()
