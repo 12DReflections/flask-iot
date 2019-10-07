@@ -6,7 +6,9 @@ from dateutil import parser
 
 '''
 Download updated files from bucket, note bucket names should match the kiosk username.
-Set this script up on a task scheduler to update the files accordingly. 
+Set this script up on a task scheduler to update the files accordingly.
+
+Currently the movie in the s3 bucket should be called Freespace.mp4
 '''
 
 def main():
@@ -32,13 +34,13 @@ def main():
     # Download the file and update the last modified
     # Remove existing file, replace with new file, update last modified, reboot system.
     if mod > local_m:
-        s3.download_file("video-media-0000", user + '/ypl2.jpeg', 'C:\\apps\\flask-iot\\static\\media\\ypl2.jpeg') # download with download filename
-        os.rename('C:\\apps\\flask-iot\\static\\media\\ypl3.jpeg',  'C:\\apps\\flask-iot\\static\\media\\ypl4.jpeg') # rename existing to number 4
-        os.rename('C:\\apps\\flask-iot\\static\\media\\ypl2.jpeg',  'C:\\apps\\flask-iot\\static\\media\\ypl3.jpeg') # rename new to number 3
+        s3.download_file("video-media-0000", user + '/Freespace.mp4', 'C:\\apps\\flask-iot\\static\\media\\Freespace.mp4') # download with download filename
+        os.rename('C:\\apps\\flask-iot\\static\\media\\Freespace1.mp4',  'C:\\apps\\flask-iot\\static\\media\\Freespace2.mp4') # rename existing to number 4
+        os.rename('C:\\apps\\flask-iot\\static\\media\\Freespace.mp4',  'C:\\apps\\flask-iot\\static\\media\\Freespace1.mp4') # rename new to number 3
         with open('./modified.txt', 'w') as f:
             f.write(str(mod))
-        os.remove('C:\\apps\\flask-iot\\static\\media\\ypl4.jpeg') # remove number 4 (aka older version)
-        # os.system("shutdown -t 0 -r -f")
+        os.remove('C:\\apps\\flask-iot\\static\\media\\Freespace2.mp4') # remove number 4 (aka older version)
+        os.system("shutdown -t 0 -r -f")
 
 if __name__=='__main__':
     main()
