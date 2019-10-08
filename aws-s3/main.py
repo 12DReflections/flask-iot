@@ -15,13 +15,13 @@ def main():
 
     # Check for File Path and Date Modified
     s3 = boto3.client('s3')
-    user = os.getlogin()
+    user = os.getlogin().lower()
     objects = s3.list_objects(Bucket="video-media-0000")
+    print(user)
     for key in objects['Contents']:
         if key['Key'].split('/')[0] == user and key['Key'].split('/')[1]:
             f_with_path = key['Key']
             mod = key['LastModified'] 
-            # print(key['Key'], key['LastModified'])
         else: 
             pass
 
