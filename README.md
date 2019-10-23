@@ -1,7 +1,11 @@
 # flask-iot
 Flask IoT Angelo Light
 
-
+# Setup
+```
+pip install -r requirements.txt
+python app.py
+```
 
 ### Full screen at boot
 https://raspberrypi.stackexchange.com/questions/69204/open-chromium-full-screen-on-start-up
