@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+static/media/Freespace1.mp4
 build/
 develop-eggs/
 dist/
